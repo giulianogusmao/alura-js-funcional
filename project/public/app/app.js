@@ -1,5 +1,7 @@
 import './utils/array-helpers.js';
-import { handleStatus, log } from './utils/promise-helpers.js';
+import { log } from './utils/promise-helpers.js';
+
+import { notasService as service } from './nota/service.js';
 
 const sumItems = code => notas =>
     notas
@@ -10,9 +12,8 @@ const sumItems = code => notas =>
 document
     .querySelector('#myButton')
     .onclick = () => {
-        fetch('http://localhost:3000/notas')
-            .then(handleStatus)
-            .then(sumItems('2asdf111'))
-            .then(log)
-            .catch(console.error);
+        service
+            .listAll()
+            .then(sumItems('2143'))
+            .then(log);
     };
