@@ -1,4 +1,5 @@
-import { handleStatus } from './utils/promise-helpers.js';
+import './utils/array-helpers.js';
+import { handleStatus, log } from './utils/promise-helpers.js';
 
 
 document
@@ -6,6 +7,11 @@ document
     .onclick = () => {
         fetch('http://localhost:3000/notas')
             .then(handleStatus)
-            .then(console.log)
+            .then(notas => notas.$flatMap(nota => nota.itens))
+            .then(log)
+            .then(itens => itens.filter(item => item.codigo == '2143'))
+            .then(log)
+            .then(itens => itens.reduce((total, item) => total + item.valor, 0))
+            .then(log)
             .catch(console.error);
     };
