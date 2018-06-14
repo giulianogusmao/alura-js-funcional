@@ -13,3 +13,8 @@ export const timeoutPromise = (milliseconds, promise) => {
         promise
     ]);
 };
+
+export const delayPromise = (milliseconds) => value =>
+    new Promise(resolve => setTimeout(() => {
+        resolve(value);
+    }, milliseconds));
