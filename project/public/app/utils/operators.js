@@ -34,3 +34,9 @@ export const composer = (...fns) =>
     value =>
         fns.reduceRight((previousValue, fn) =>
             fn(previousValue), value);
+
+// utilizando o pipe ao invés do compose fica mais fácil a leitura e melhora o entendimento
+export const pipe = (...fns) =>
+    value =>
+        fns.reduce((previousValue, fn) =>
+            fn(previousValue), value);
