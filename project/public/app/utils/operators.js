@@ -1,3 +1,9 @@
+
+export const log = param => {
+    console.log(param);
+    return param;
+}
+
 /*
  * A função Function.bind cria uma nova função. Seu primeiro argumento é o valor
  *  de this que desejamos que a nova função utilize como contexto. Porém, como
