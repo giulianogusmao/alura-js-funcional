@@ -12,7 +12,7 @@
 export const partialize = (fn, ...params) =>
     fn.bind(null, ...params);
 
-    
+
 /*
  * Ela receberá como parâmetro um número indeterminado de funções e retornará uma 
  * função que terá apenas um argumento. No contexto do problema que estamos resolvendo, 
@@ -29,7 +29,7 @@ export const partialize = (fn, ...params) =>
  * na primeira chamada de fn(previousValue). Em nosso contexto, na primeira iteração 
  * de reduceRight, fn será a função getItemsFromNotas. Seu resultado será o previousValue 
  * passado para a função anterior e assim sucessivamente.
-*/ 
+*/
 export const composer = (...fns) =>
     value =>
         fns.reduceRight((previousValue, fn) =>
@@ -40,3 +40,15 @@ export const pipe = (...fns) =>
     value =>
         fns.reduce((previousValue, fn) =>
             fn(previousValue), value);
+
+// Função que irá limitar o número de vezes que uma função será chamada
+export const takeUntil = (times, fn) =>
+    () => times-- > 0 && fn();
+
+export const debounceTime = (milliseconds, fn) => {
+    let timer = 0;
+    return () => {
+        clearTimeout(timer);
+        timer = setTimeout(fn, milliseconds);
+    }
+};
