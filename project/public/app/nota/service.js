@@ -1,12 +1,20 @@
 import { handleStatus } from '../utils/promise-helpers.js';
+import { partialize } from '../utils/operators.js';
 
 const API = 'http://localhost:3000/notas';
 
-const sumItems = code => notas =>
-    notas
-        .$flatMap(nota => nota.itens)
-        .filter(item => item.codigo == code)
-        .reduce((total, item) => total + item.valor, 0)
+const getItemsFromNotas = notas => notas.$flatMap(nota => nota.itens);
+const filterItemsByCode = (code, notas) => notas.filter(item => item.codigo == code);
+const sumItemsValue = notas => notas.reduce((total, item) => total + item.valor, 0);
+
+const sumItems = code => notas => {
+    const filterItems = partialize(filterItemsByCode, code);
+    return sumItemsValue(
+        filterItems(
+            getItemsFromNotas(notas)
+        )
+    );
+};
 
 export const notasService = {
     // carrega notas

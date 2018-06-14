@@ -7,5 +7,6 @@ document
     .onclick = () => {
         service
             .sumItems('2143')
-            .then(log);
+            .then(log)
+            .catch(console.error);
     };
